@@ -1,27 +1,31 @@
 import pygame
-import os
 
 class Enemy:
     def __init__(self, x, y):
+        self.image = pygame.image.load("rattle_rush/assets/snake.png")
+        self.rect = self.image.get_rect(topleft=(x, y))
+
+
         self.x = float(x)
         self.y = float(y)
-        base_path = os.path.dirname(__file__) 
-        image_path = os.path.join(base_path, "assets", "snake.png")
-
-        self.image = pygame.image.load(image_path)
-        self.rect = self.image.get_rect(topleft=(x, y))
-        self.speed = 0.3 #snake speed
+        self.speed = 0.5
 
     def chase(self, player):
-        if self.rect.x < player.rect.x:
-            self.rect.x += self.speed
-        elif self.rect.x > player.rect.x:
-            self.rect.x -= self.speed
 
-        if self.rect.y < player.rect.y:
-            self.rect.y += self.speed
-        elif self.rect.y > player.rect.y:
-            self.rect.y -= self.speed
+        dx = player.rect.x - self.x
+        dy = player.rect.y - self.y
 
+
+        distance = (dx**2 + dy**2) ** 0.5
+        if distance != 0:
+            self.x += (dx / distance) * self.speed
+            self.y += (dy / distance) * self.speed
+
+
+        self.rect.x = int(self.x)
+        self.rect.y = int(self.y)
+
+
+        #print(f"Enemy position: ({self.x}, {self.y}) | Speed: {self.speed}")
     def draw(self, screen):
         screen.blit(self.image, self.rect)
