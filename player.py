@@ -9,7 +9,7 @@ class Player:
 
         self.image = pygame.image.load(image_path)  
         self.rect = self.image.get_rect(topleft=(x, y))
-        self.speed = 5
+        self.speed = 1 #player speed
 
     def move(self, keys):
         if keys[pygame.K_LEFT]: 
@@ -23,3 +23,5 @@ class Player:
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+'''movement and drawing of player'''
+'''effects of powerup visual + functional'''
