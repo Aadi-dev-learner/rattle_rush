@@ -17,11 +17,15 @@ class Player:
         if keys[pygame.K_RIGHT]: 
             self.rect.x += self.speed
         if keys[pygame.K_UP]: 
-            self.rect.y -= self.speed
+            self.rect.y -= self.speed   
         if keys[pygame.K_DOWN]: 
             self.rect.y += self.speed
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+    
+    def check_collision(self, enemy):
+        return self.rect.colliderect(enemy.rect)
+    
 '''movement and drawing of player'''
 '''effects of powerup visual + functional'''

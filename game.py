@@ -35,6 +35,10 @@ while running:
         print("You defeated the snake!")
         running = False
 
+    if player.check_collision(powerup):  
+        print("Apple eaten!")  
+        powered_up = True  # Apply power-up effect
+        powerup.rect.x, powerup.rect.y = -100, -100  # Hide the apple
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
