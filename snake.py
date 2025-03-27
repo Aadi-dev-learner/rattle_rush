@@ -2,7 +2,7 @@ import pygame
 
 class Enemy:
     def __init__(self, x, y):
-        self.image = pygame.image.load("assets/snake.png")
+        self.image = pygame.image.load("rattle_rush/assets/snake.png")
         self.rect = self.image.get_rect(topleft=(x, y))
 
 
@@ -26,6 +26,6 @@ class Enemy:
         self.rect.y = int(self.y)
 
 
-        #print(f"Enemy position: ({self.x}, {self.y}) | Speed: {self.speed}")
+       
     def draw(self, screen):
         screen.blit(self.image, self.rect)
