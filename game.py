@@ -61,14 +61,20 @@ maze_img = pygame.image.load(maze_path)
 maze_width, maze_height = maze_img.get_size()
 
 # Create Game Window
-screen = pygame.display.set_mode((maze_width, maze_height))
+# Set fixed window size
+WIDTH, HEIGHT = 800, 600  # Adjust as needed
+maze_img = pygame.transform.scale(maze_img, (WIDTH, HEIGHT))  # Resize image
+
+# Create Game Window
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Maze Escape - Beware of the Snake!")
 
 # Colors
 WHITE = (255, 255, 255)
 
 # Create Game Objects
-player = Player(400, 300)  # Start position
+player_start_x, player_start_y = 40, HEIGHT - 60  # Bottom-left start position
+player = Player(player_start_x, player_start_y)
 enemy = Enemy(100, 100)  # Snake enemy
 key = Key(700, 500)  # Key position
 exit_zone = pygame.Rect(maze_width - 60, 20, 40, 40)  # Exit at top-right
