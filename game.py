@@ -1,7 +1,7 @@
 import pygame
 from player import Player
 from snake import Enemy
-from powerup import Apple
+from key import Key  # Replace Apple with Key
 
 pygame.init()
 
@@ -11,30 +11,33 @@ pygame.display.set_caption("Beware of the SNAKE!")
 
 player = Player(400, 300)
 enemy = Enemy(100, 100)
-powerup = Apple(200, 200)
+key = Key(200, 200)  # Key object
 
 running = True
-powered_up = False
+has_key = False  # Player starts without a key
 
 while running:
     screen.fill((0, 0, 0))
 
     keys = pygame.key.get_pressed()
     player.move(keys)
-    if not powered_up :
-        enemy.chase(player)
+    enemy.chase(player)
 
     enemy.draw(screen)
     player.draw(screen)
-    powerup.draw(screen)
+    if not has_key:  # Draw key only if not collected
+        key.draw(screen)
 
+    # Check for key collection
+    if player.rect.colliderect(key.rect):
+        has_key = True
+        print("Key collected!")
+        key.rect.x, key.rect.y = -100, -100  # Hide the key
+
+    # Check for player-enemy collision (game over)
     if player.rect.colliderect(enemy.rect):
-        powered_up = True
-
-    if powered_up and player.rect.colliderect(enemy.rect): 
-        print("You defeated the snake!")
+        print("Game Over! The snake got you!")
         running = False
-
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
