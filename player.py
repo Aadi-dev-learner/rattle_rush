@@ -4,11 +4,11 @@ import os
 class Player:
     def __init__(self, x, y):
         base_path = os.path.dirname(__file__) 
-        image_path = os.path.join(base_path, "assets", "player.png")
+        image_path = os.path.join(base_path, "assets", "run_3.png")
 
         self.image = pygame.image.load(image_path)  
         self.rect = self.image.get_rect(topleft=(x, y))
-        self.speed = 3  # Increased speed for better movement
+        self.speed = 2  # Increased speed for better movement
         self.move_counter = 0  # Counter to control movement speed
 
     def move(self, keys, walls):

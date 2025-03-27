@@ -6,6 +6,10 @@ from key import Key
 
 # Initialize Pygame
 pygame.init()
+pygame.mixer.init()
+# Load sound
+sound = pygame.mixer.Sound('assets/key.mp3')
+sound.play()
 
 # Create Game Window
 WIDTH, HEIGHT = 800, 600
@@ -13,7 +17,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Maze Escape - Beware of the Snake!")
 
 # Load Maze Image
-maze_path = os.path.join('rattle_rush/assets/maze.png')  
+maze_path = os.path.join('assets/maze2.png')
 if not os.path.exists(maze_path):
     print("Warning: Maze image not found!")
     maze_img = pygame.Surface((WIDTH, HEIGHT))  # Create a blank surface if missing
@@ -23,20 +27,19 @@ else:
 
 # Walls for collision
 define_walls = [
-    pygame.Rect(0, 0, WIDTH, 20),  # Top wall
-    pygame.Rect(0, 0, 20, HEIGHT),  # Left wall
-    pygame.Rect(WIDTH - 20, 0, 20, HEIGHT),  # Right wall
-    pygame.Rect(0, HEIGHT - 20, WIDTH, 20),  # Bottom wall
-    pygame.Rect(100, 100, 200, 20),
-    pygame.Rect(300, 200, 150, 20),
+    # Outer Walls
+    pygame.Rect(0, 0, WIDTH+80, 30),   # Top wall
+    pygame.Rect(0, 0, 75, HEIGHT),     # Left wall
+    pygame.Rect(WIDTH - 50, 0, 20, HEIGHT),  # Right wall
+    pygame.Rect(0, HEIGHT - 50, WIDTH, 80),  # Bottom wall
+
 ]
 
 # Create Game Objects
 player = Player(100, HEIGHT - 118)
-enemy = Enemy(100, 100)
+enemy = Enemy(300, 500)
 key = Key(700, 500)
-exit_zone = pygame.Rect(WIDTH - 60, 20, 40, 40)  # Fixed by replacing maze_width with WIDTH
-
+exit_zone = pygame.Rect(WIDTH - 60, 20, 40, 20)  # Fixed by replacing maze_width with WIDTH
 gate = pygame.Rect(WIDTH - 100, 50, 60, 20)  # Gate blocking the exit
 
 def draw_gate():
@@ -61,7 +64,7 @@ while running:
     
     keys = pygame.key.get_pressed()
     player.move(keys, define_walls)
-    enemy.chase(player)
+    enemy.chase(player, define_walls)
     
     # Draw objects
     player.draw(screen)
